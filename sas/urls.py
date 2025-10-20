@@ -10,7 +10,4 @@ urlpatterns = [
 
     # keep your original natural-language endpoint
     path('strings/filter-by-natural-language/', views.filter_by_natural_language, name='natural-language-filter'),
-
-    # alias to match tests that might hit this path
-    path('strings/natural-language-filter/', views.filter_by_natural_language, name='natural-language-filter-alt'),
 ]
