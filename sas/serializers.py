@@ -20,8 +20,4 @@ class AnalyzedStringSerializer(serializers.ModelSerializer):
         }
 
 class StringInputSerializer(serializers.Serializer):
-    value = serializers.CharField(allow_blank=True, required=True)
-
-
-class StringInputSerializer(serializers.Serializer):
-    value = serializers.CharField(max_length=1000)
+    value = serializers.CharField(allow_blank=True, max_length=1000)
