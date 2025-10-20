@@ -105,8 +105,8 @@ class StringAnalysisAPITests(APITestCase):
         self.client.post(self.create_url, {'value': 'madam'}, format='json')
         self.client.post(self.create_url, {'value': 'hello'}, format='json')
         
-        # Test natural language query
-        filter_url = reverse('natural-language-filter')
+        # FIX: Use direct URL path
+        filter_url = '/strings/filter-by-natural-language'
         response = self.client.get(filter_url, {'query': 'palindromic strings'})
         
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -152,3 +152,5 @@ class ModelTests(TestCase):
         freq_map = string_obj.get_character_frequency()
         self.assertEqual(freq_map['l'], 2)
         self.assertIsInstance(freq_map, dict)
+        
+    

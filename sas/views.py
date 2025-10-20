@@ -138,6 +138,7 @@ def get_all_strings(request):
 #natural language filtering
 @api_view(['GET'])
 def filter_by_natural_language(request):
+    print("Natural language filter endpoint hit!")  # Debug line
     query = request.GET.get('query', '')
     
     if not query:
@@ -145,6 +146,8 @@ def filter_by_natural_language(request):
             {"error": "Query parameter is required"}, 
             status=status.HTTP_400_BAD_REQUEST
         )
+    
+    print(f"Query received: {query}")  # Debug line
     
     query = query.lower()
     parsed_filters = {}
@@ -192,6 +195,8 @@ def filter_by_natural_language(request):
             queryset = [obj for obj in queryset if value in obj.value]
     
     serializer = AnalyzedStringSerializer(queryset, many=True)
+    
+    print(f"Returning {len(serializer.data)} results")  # Debug line
     
     return Response({
         "data": serializer.data,
