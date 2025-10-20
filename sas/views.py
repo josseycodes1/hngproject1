@@ -207,9 +207,24 @@ def filter_by_natural_language(request):
         }
     })
 
-#delete String
+
 @api_view(['DELETE'])
 def delete_string(request, string_value):
     analyzed_string = get_object_or_404(AnalyzedString, value=string_value)
     analyzed_string.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def health_check(request):
+    return Response({
+        "status": "OK", 
+        "message": "String Analysis Service is running",
+        "endpoints": {
+            "POST /strings/": "Create and analyze string",
+            "GET /strings/<string>/": "Get specific string", 
+            "GET /strings-list/": "Get all strings with filtering",
+            "GET /strings/filter-by-natural-language/?query=...": "Natural language filtering",
+            "DELETE /strings/<string>/delete/": "Delete string"
+        }
+    }, status=status.HTTP_200_OK)
