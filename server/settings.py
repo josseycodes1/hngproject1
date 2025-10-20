@@ -15,7 +15,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-for-developme
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = [
+    'hng-project1-production.up.railway.app',
+    '.railway.app',
+    'localhost',
+    '127.0.0.1'
+]
 
 # Application definition
 INSTALLED_APPS = [
