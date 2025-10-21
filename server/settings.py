@@ -2,16 +2,16 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
+
 SECRET_KEY = 'django-insecure-i7yj+*z%5%b^f2wi)_zt&8(4bi^pa%nv(qt9(ial@j0v79j%a+'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = [
@@ -21,7 +21,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
-# Application definition
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +58,7 @@ ROOT_URLCONF = 'server.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-# Disable automatic trailing slash
+
 APPEND_SLASH = False
 
 TEMPLATES = [
@@ -79,7 +79,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
-# Database - Using SQLite
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,7 +87,7 @@ DATABASES = {
     }
 }
 
-# Password validation
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -103,15 +103,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files
+
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Default primary key field type
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

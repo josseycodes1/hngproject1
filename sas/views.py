@@ -32,14 +32,14 @@ def create_analyze_string(request):
     
     value = serializer.validated_data['value']
     
-    # check if value is actually a string
+
     if not isinstance(value, str):
         return Response(
             {"error": "Value must be a string"}, 
             status=status.HTTP_422_UNPROCESSABLE_ENTITY
         )
     
-    # analyze the string
+  
     try:
         properties = analyze_string(value)
     except ValueError as e:
@@ -48,14 +48,14 @@ def create_analyze_string(request):
             status=status.HTTP_422_UNPROCESSABLE_ENTITY
         )
     
-    # check if string already exists
+
     if AnalyzedString.objects.filter(id=properties['sha256_hash']).exists():
         return Response(
             {"error": "String already exists in the system"}, 
             status=status.HTTP_409_CONFLICT
         )
     
-    # create and save the analyzed string
+
     analyzed_string = AnalyzedString(
         id=properties['sha256_hash'],
         value=value,
@@ -70,20 +70,20 @@ def create_analyze_string(request):
     response_serializer = AnalyzedStringSerializer(analyzed_string)
     return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
-# get specific string
+
 @api_view(['GET'])
 def get_string(request, string_value):
-    # Find by value (URL decoded)
+
     analyzed_string = get_object_or_404(AnalyzedString, value=string_value)
     serializer = AnalyzedStringSerializer(analyzed_string)
     return Response(serializer.data)
 
-#get all strings with filtering
+
 @api_view(['GET'])
 def get_all_strings(request):
     queryset = AnalyzedString.objects.all()
     
-    #apply filters
+ 
     is_palindrome = request.GET.get('is_palindrome')
     min_length = request.GET.get('min_length')
     max_length = request.GET.get('max_length')
@@ -147,10 +147,10 @@ def get_all_strings(request):
         "filters_applied": filters_applied
     })
 
-#natural language filtering
+
 @api_view(['GET'])
 def filter_by_natural_language(request):
-    print("Natural language filter endpoint hit!")  # Debug line
+    print("Natural language filter endpoint hit!") 
     query = request.GET.get('query', '')
     
     if not query:
@@ -159,12 +159,12 @@ def filter_by_natural_language(request):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    print(f"Query received: {query}")  # Debug line
+    print(f"Query received: {query}") 
     
     query = query.lower()
     parsed_filters = {}
     
-    #simple keyword parsing
+   
     if "single word" in query or "one word" in query:
         parsed_filters["word_count"] = 1
     
@@ -172,7 +172,7 @@ def filter_by_natural_language(request):
         parsed_filters["is_palindrome"] = True
     
     if "longer than" in query:
-        # Extract number - simple implementation
+       
         if "10" in query:
             parsed_filters["min_length"] = 11
         elif "5" in query:
@@ -184,7 +184,7 @@ def filter_by_natural_language(request):
         elif "vowel" in query:
             parsed_filters["contains_character"] = "a"
         elif "letter" in query:
-            #extract the letter mentioned
+            
             words = query.split()
             for i, word in enumerate(words):
                 if word == "letter" and i + 1 < len(words):
@@ -193,7 +193,7 @@ def filter_by_natural_language(request):
                         parsed_filters["contains_character"] = letter
                         break
     
-    # apply the parsed filters
+    
     queryset = AnalyzedString.objects.all()
     
     for key, value in parsed_filters.items():
@@ -208,7 +208,7 @@ def filter_by_natural_language(request):
     
     serializer = AnalyzedStringSerializer(queryset, many=True)
     
-    print(f"Returning {len(serializer.data)} results")  # Debug line
+    print(f"Returning {len(serializer.data)} results") 
     
     return Response({
         "data": serializer.data,
