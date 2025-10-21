@@ -10,7 +10,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-fallback-key-for-development-only')
+SECRET_KEY = 'django-insecure-i7yj+*z%5%b^f2wi)_zt&8(4bi^pa%nv(qt9(ial@j0v79j%a+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
@@ -58,6 +58,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'server.urls'
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+# Disable automatic trailing slash
+APPEND_SLASH = False
 
 TEMPLATES = [
     {

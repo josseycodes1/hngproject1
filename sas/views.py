@@ -7,7 +7,19 @@ from .serializers import AnalyzedStringSerializer, StringInputSerializer
 from .utils import analyze_string
 import json
 
-# create/analyze String
+@api_view(['GET'])
+def health_check(request):
+    return Response({
+        "status": "OK", 
+        "message": "String Analysis Service is running",
+        "endpoints": {
+            "POST /strings/": "Create and analyze string",
+            "GET /strings/<string>/": "Get specific string", 
+            "GET /strings-list/": "Get all strings with filtering",
+            "GET /strings/filter-by-natural-language/?query=...": "Natural language filtering",
+            "DELETE /strings/<string>/delete/": "Delete string"
+        }
+    }, status=status.HTTP_200_OK)
 @api_view(['POST'])
 def create_analyze_string(request):
     serializer = StringInputSerializer(data=request.data)
@@ -215,16 +227,3 @@ def delete_string(request, string_value):
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET'])
-def health_check(request):
-    return Response({
-        "status": "OK", 
-        "message": "String Analysis Service is running",
-        "endpoints": {
-            "POST /strings/": "Create and analyze string",
-            "GET /strings/<string>/": "Get specific string", 
-            "GET /strings-list/": "Get all strings with filtering",
-            "GET /strings/filter-by-natural-language/?query=...": "Natural language filtering",
-            "DELETE /strings/<string>/delete/": "Delete string"
-        }
-    }, status=status.HTTP_200_OK)
